@@ -68,6 +68,7 @@ static const Rule rules[] = {
 	/* class        instance  title           tags mask  isfloating  isterminal  noswallow  monitor  donotcenter   x,y,w,h         borderpx*/
 	{ "Termite",    NULL,     NULL,           0,         0,          1,           0,        -1,                0,  50,50,500,500,  borderpx },
 	{ "Gcolor2",    NULL,     NULL,           0,         1,          0,           0,        -1,                0,  50,50,500,500,  borderpx },
+	{ "Galculator", NULL,     NULL,           0,         1,          0,           0,        -1,                0,  50,50,500,700,  borderpx },
 	{ "Gsimplecal", NULL,     NULL,           0,         1,          0,           0,        -1,                1,  817,50,50,50,   0 },
 	{ "Godot",      NULL,     NULL,           1 << 5,    0,          0,           0,         0,                0,  50,50,500,500,  borderpx },
 	{ "Termite",    NULL,     "GODOT",        1 << 4,    0,          0,           0,         0,                0,  50,50,500,500,  borderpx },
@@ -122,6 +123,7 @@ static const char *pcmanfmcmd[] = { "pcmanfm", NULL };
 static const char *rangercmd[] = { "termite", "-e", "ranger", NULL };
 static const char *vimcmd[] = { "termite", "-e", "nvim", NULL };
 static const char *spotifycmd[] = { "spotify", NULL };
+static const char *galculatorcmd[] = { "galculator", NULL };
 static const char *godotcmd[] = { "/home/amnesia/.scripts/godot_launcher.sh", NULL };
 static const char *langtogglecmd[] = { "/home/amnesia/.scripts/keyboard_layout_toggle.sh", "us", "gr", NULL };
 
@@ -145,6 +147,7 @@ static Key keys[] = {
 	{ MODKEY,				/*s*/ 39,		spawn,	    	{.v = spotifycmd } },
 	{ MODKEY|ShiftMask,		/*g*/ 42,		spawn,	    	{.v = godotcmd } },
 	{ MODKEY,				/*z*/ 52,		spawn,	    	{.v = langtogglecmd } },
+	{ MODKEY,				/*c*/ 54,		spawn,	    	{.v = galculatorcmd } },
 
 	/* spotify*/
 	{ MODKEY,				/*F9*/ 95,		spawn,	    	{.v = spotifycmd_previous } },
