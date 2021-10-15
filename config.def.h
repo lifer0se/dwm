@@ -117,6 +117,7 @@ static const char *volumeupcmd[] = { "amixer", "-q", "-D", "pulse", "sset", "Mas
 /* application launch commands */
 static const char *termcmd[]  = { "termite", NULL };
 static const char *dmenucmd[] = { "dmenu_run", "-p", "run:", NULL };
+static const char *passcmd[] = { "passmenu", NULL };
 static const char *bravecmd[] = { "brave", NULL };
 static const char *braveinccmd[] = { "brave", "--incognito", NULL };
 static const char *pcmanfmcmd[] = { "pcmanfm", NULL };
@@ -138,6 +139,7 @@ static Key keys[] = {
 
 	/* apps */
 	{ MODKEY,				/*d*/ 40,		spawn,	    	{.v = dmenucmd } },
+	{ MODKEY,				/*p*/ 33,		spawn,	    	{.v = passcmd } },
 	{ MODKEY,				/*Return*/ 36,	spawn,	    	{.v = termcmd } },
 	{ MODKEY,				/*w*/ 25,		spawn,	    	{.v = bravecmd } },
 	{ MODKEY|ShiftMask,		/*w*/ 25,		spawn,	    	{.v = braveinccmd } },
