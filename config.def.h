@@ -66,13 +66,13 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class        instance  title           tags mask  isfloating  isterminal  noswallow  monitor  donotcenter   x,y,w,h         borderpx*/
-	{ "Termite",    NULL,     NULL,           0,         0,          1,           0,        -1,                0,  50,50,500,500,  borderpx },
-	{ "Gcolor2",    NULL,     NULL,           0,         1,          0,           0,        -1,                0,  50,50,500,500,  borderpx },
-	{ "Galculator", NULL,     NULL,           0,         1,          0,           0,        -1,                0,  50,50,500,700,  borderpx },
-	{ "Gsimplecal", NULL,     NULL,           0,         1,          0,           0,        -1,                1,  817,50,50,50,   0 },
-	{ "Godot",      NULL,     NULL,           1 << 5,    0,          0,           0,         0,                0,  50,50,500,500,  borderpx },
-	{ "Termite",    NULL,     "GODOT",        1 << 4,    0,          0,           0,         0,                0,  50,50,500,500,  borderpx },
-	{ NULL,         NULL,     "Event Tester", 0,         0,          0,           1,        -1,                0,  50,50,500,500,  borderpx } /* xev */
+	{ "Termite",    NULL,     NULL,           0,         0,          1,           0,        -1,                0,  50,50,500,500,  borderpx,	0 },
+	{ "Gcolor2",    NULL,     NULL,           0,         1,          0,           0,        -1,                0,  50,50,500,500,  borderpx,	'g' },
+	{ "Galculator", NULL,     NULL,           0,         1,          0,           0,        -1,                0,  50,50,500,700,  borderpx,	'c' },
+	{ "Gsimplecal", NULL,     NULL,           0,         1,          0,           0,        -1,                1,  817,50,50,50,   0,	0 },
+	{ "Godot",      NULL,     NULL,           1 << 5,    0,          0,           0,         0,                0,  50,50,500,500,  borderpx,	0 },
+	{ "Termite",    NULL,     "GODOT",        1 << 4,    0,          0,           0,         0,                0,  50,50,500,500,  borderpx,	0 },
+	{ NULL,         NULL,     "Event Tester", 0,         0,          0,           1,        -1,                0,  50,50,500,500,  borderpx,	0 } /* xev */
 };
 
 /* layout(s) */
@@ -104,6 +104,10 @@ static const Layout layouts[] = {
 
 /* commands */
 
+/* scratchpad commands */
+static const char *gcolorcmd[] = { "g", "gcolor2", NULL};
+static const char *galculatorcmd[] = { "c", "galculator", NULL };
+
 /* spotify control commands */
 static const char *spotifycmd_previous[] = { "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.Previous", NULL };
 static const char *spotifycmd_play[] = { "dbus-send", "--print-reply", "--dest=org.mpris.MediaPlayer2.spotify", "/org/mpris/MediaPlayer2", "org.mpris.MediaPlayer2.Player.PlayPause", NULL };
@@ -124,7 +128,6 @@ static const char *pcmanfmcmd[] = { "pcmanfm", NULL };
 static const char *rangercmd[] = { "termite", "-e", "ranger", NULL };
 static const char *vimcmd[] = { "termite", "-e", "nvim", NULL };
 static const char *spotifycmd[] = { "spotify", NULL };
-static const char *galculatorcmd[] = { "galculator", NULL };
 static const char *godotcmd[] = { "/home/amnesia/.scripts/godot_launcher.sh", NULL };
 static const char *langtogglecmd[] = { "/home/amnesia/.scripts/keyboard_layout_toggle.sh", "us", "gr", NULL };
 
@@ -138,65 +141,66 @@ static const char *killdwmcmd[] = { "killall", "dwm", NULL };
 static Key keys[] = {
 
 	/* apps */
-	{ MODKEY,				/*d*/ 40,		spawn,	    	{.v = dmenucmd } },
-	{ MODKEY,				/*p*/ 33,		spawn,	    	{.v = passcmd } },
-	{ MODKEY,				/*Return*/ 36,	spawn,	    	{.v = termcmd } },
-	{ MODKEY,				/*w*/ 25,		spawn,	    	{.v = bravecmd } },
-	{ MODKEY|ShiftMask,		/*w*/ 25,		spawn,	    	{.v = braveinccmd } },
-	{ MODKEY,				/*f*/ 41,		spawn,	    	{.v = rangercmd } },
-	{ MODKEY|ShiftMask,		/*f*/ 41,		spawn,	    	{.v = pcmanfmcmd } },
-	{ MODKEY,				/*v*/ 55,		spawn,	    	{.v = vimcmd } },
-	{ MODKEY,				/*s*/ 39,		spawn,	    	{.v = spotifycmd } },
-	{ MODKEY|ShiftMask,		/*g*/ 42,		spawn,	    	{.v = godotcmd } },
-	{ MODKEY,				/*z*/ 52,		spawn,	    	{.v = langtogglecmd } },
-	{ MODKEY,				/*c*/ 54,		spawn,	    	{.v = galculatorcmd } },
+	{ MODKEY,							/*d*/ 40,				spawn,	   			 	{.v = dmenucmd } },
+	{ MODKEY,							/*p*/ 33,				spawn,	    			{.v = passcmd } },
+	{ MODKEY,							/*Return*/ 36,	spawn,	   			 	{.v = termcmd } },
+	{ MODKEY,							/*w*/ 25,				spawn,	    			{.v = bravecmd } },
+	{ MODKEY|ShiftMask,		/*w*/ 25,				spawn,	 			   	{.v = braveinccmd } },
+	{ MODKEY,							/*f*/ 41,				spawn,	 			   	{.v = rangercmd } },
+	{ MODKEY|ShiftMask,		/*f*/ 41,				spawn,	 			   	{.v = pcmanfmcmd } },
+	{ MODKEY,							/*v*/ 55,				spawn,	 			   	{.v = vimcmd } },
+	{ MODKEY,							/*s*/ 39,				spawn,	 			   	{.v = spotifycmd } },
+	{ MODKEY|ShiftMask,		/*g*/ 42,				spawn,	 			   	{.v = godotcmd } },
+	{ MODKEY,							/*z*/ 52,				spawn,	 			   	{.v = langtogglecmd } },
+
+	{ MODKEY,							/*c*/ 54,				togglescratch,   	{.v = galculatorcmd } },
+	{ MODKEY,							/*g*/ 42,				togglescratch,   	{.v = gcolorcmd } },
 
 	/* spotify*/
-	{ MODKEY,				/*F9*/ 95,		spawn,	    	{.v = spotifycmd_previous } },
-	{ MODKEY,				/*F11*/ 75,		spawn,	    	{.v = spotifycmd_play } },
-	{ MODKEY,				/*F12*/ 96,		spawn,	    	{.v = spotifycmd_next } },
+	{ MODKEY,							/*F9*/ 95,			spawn,	 			   	{.v = spotifycmd_previous } },
+	{ MODKEY,							/*F11*/ 75,			spawn,	 			   	{.v = spotifycmd_play } },
+	{ MODKEY,							/*F12*/ 96,			spawn,	 			   	{.v = spotifycmd_next } },
 
 	/* volume*/
-	{ MODKEY,				/*F13*/ 107,	spawn,	    	{.v = mutecmd } },
-	{ MODKEY,				/*F14*/ 78,		spawn,	    	{.v = volumedowncmd } },
-	{ MODKEY,				/*F15*/ 127,	spawn,	    	{.v = volumeupcmd } },
+	{ MODKEY,							/*F13*/ 107,		spawn,	 			   	{.v = mutecmd } },
+	{ MODKEY,							/*F14*/ 78,			spawn,	 			   	{.v = volumedowncmd } },
+	{ MODKEY,							/*F15*/ 127,		spawn,	 			   	{.v = volumeupcmd } },
 
 	/* dwm  control */
-	{ MODKEY,				/*q*/ 24,		killclient,	   	{0} },
-	{ MODKEY|ShiftMask,		/*q*/ 24,		spawn,		   	{.v = killxinitcmd } },
-	{ MODKEY|ShiftMask,		/*r*/ 27,		spawn,		   	{.v = killdwmcmd } },
-	{ MODKEY,				/*space*/ 65,	togglefloating,	{0} },
-	{ MODKEY,               /*b*/ 56,      	togglebar,     	{0} },
-	{ MODKEY,				/*g*/ 42,		togglegaps,   	{0} },
-    { MODKEY,               /*u*/ 30,       incnmaster,     {.i = +1 } },
-	{ MODKEY,               /*i*/ 31,       incnmaster,     {.i = -1 } },
+	{ MODKEY,							/*q*/ 24,				killclient,		   	{0} },
+	{ MODKEY|ShiftMask,		/*q*/ 24,				spawn,		 		 	 	{.v = killxinitcmd } },
+	{ MODKEY|ShiftMask,		/*r*/ 27,				spawn,		 	  		{.v = killdwmcmd } },
+	{ MODKEY,							/*space*/ 65,		togglefloating,		{0} },
+	{ MODKEY,             /*b*/ 56,      	togglebar,     		{0} },
+	{ MODKEY,             /*u*/ 30,       incnmaster,		  	{.i = +1 } },
+	{ MODKEY,             /*i*/ 31,       incnmaster,    		{.i = -1 } },
 
 	/* navigation*/
-	{ MODKEY,               /*j*/ 44,      	focusstack,     {.i = +1 } },
-	{ MODKEY,               /*k*/ 45,      	focusstack,     {.i = -1 } },
-	{ MODKEY|ShiftMask,		/*j*/ 44,		movestack,  	{.i = +1 } },
-	{ MODKEY|ShiftMask,		/*k*/ 45,		movestack,  	{.i = -1 } },
-	{ MODKEY|ControlMask,	/*j*/ 44,		setcfact,   	{.f = +0.25} },
-	{ MODKEY|ControlMask,	/*k*/ 45,		setcfact,   	{.f = -0.25} },
-	{ MODKEY|Mod1Mask,		/*j*/ 44,		shiftview,  	{.i = -1 } },
-	{ MODKEY|Mod1Mask,		/*k*/ 45,		shiftview,  	{.i = +1 } },
-	{ MODKEY,				/*h*/ 43,		switchcol,  	{0} },
-	{ MODKEY,				/*l*/ 46,		switchcol,  	{.i = +1}  },
-	{ MODKEY|ShiftMask,		/*h*/ 43,		zoom,	    	{0} },
-	{ MODKEY|ShiftMask,		/*l*/ 46,		zoom,	    	{0} },
-	{ MODKEY|ControlMask,	/*h*/ 43,		setmfact,   	{.f = -0.05} },
-	{ MODKEY|ControlMask,	/*l*/ 46,		setmfact,   	{.f = +0.05} },
-	{ MODKEY,				/*o*/ 32,		focusmon,   	{.i = +1 } },
-	{ MODKEY|ShiftMask,		/*o*/ 32,		tagmon,	    	{.i = +1 } },
+	{ MODKEY,             /*j*/ 44,      	focusstack,  			{.i = +1 } },
+	{ MODKEY,             /*k*/ 45,      	focusstack, 			{.i = -1 } },
+	{ MODKEY|ShiftMask,		/*j*/ 44,				movestack,  			{.i = +1 } },
+	{ MODKEY|ShiftMask,		/*k*/ 45,				movestack,  			{.i = -1 } },
+	{ MODKEY|ControlMask,	/*j*/ 44,				setcfact,   			{.f = +0.25} },
+	{ MODKEY|ControlMask,	/*k*/ 45,				setcfact,  			 	{.f = -0.25} },
+	{ MODKEY|Mod1Mask,		/*j*/ 44,				shiftview,  			{.i = -1 } },
+	{ MODKEY|Mod1Mask,		/*k*/ 45,				shiftview,  			{.i = +1 } },
+	{ MODKEY,							/*h*/ 43,				switchcol,  			{0} },
+	{ MODKEY,							/*l*/ 46,				switchcol,  			{.i = +1}  },
+	{ MODKEY|ShiftMask,		/*h*/ 43,				zoom,	    				{0} },
+	{ MODKEY|ShiftMask,		/*l*/ 46,				zoom,	    				{0} },
+	{ MODKEY|ControlMask,	/*h*/ 43,				setmfact,   			{.f = -0.05} },
+	{ MODKEY|ControlMask,	/*l*/ 46,				setmfact,   			{.f = +0.05} },
+	{ MODKEY,							/*o*/ 32,				focusmon,   			{.i = +1 } },
+	{ MODKEY|ShiftMask,		/*o*/ 32,				tagmon,	    			{.i = +1 } },
 
-	{ MODKEY,           /*Down*/ 116,       moveresizeedge, {.v = "b"} },
-	{ MODKEY,             /*Up*/ 111,       moveresizeedge, {.v = "t"} },
-	{ MODKEY,          /*Right*/ 114,       moveresizeedge, {.v = "r"} },
-	{ MODKEY,           /*Left*/ 113,       moveresizeedge, {.v = "l"} },
-	{ MODKEY|ShiftMask, /*Down*/ 116,       moveresizeedge, {.v = "B"} },
-	{ MODKEY|ShiftMask,   /*Up*/ 111,       moveresizeedge, {.v = "T"} },
-	{ MODKEY|ShiftMask,/*Right*/ 114,       moveresizeedge, {.v = "R"} },
-	{ MODKEY|ShiftMask, /*Left*/ 113,       moveresizeedge, {.v = "L"} },
+	{ MODKEY,      	     	/*Down*/ 116,   moveresizeedge, 	{.v = "b"} },
+	{ MODKEY,            	/*Up*/ 111,     moveresizeedge, 	{.v = "t"} },
+	{ MODKEY,       	   	/*Right*/ 114,  moveresizeedge, 	{.v = "r"} },
+	{ MODKEY,         	 	/*Left*/ 113,   moveresizeedge, 	{.v = "l"} },
+	{ MODKEY|ShiftMask,		/*Down*/ 116,   moveresizeedge, 	{.v = "B"} },
+	{ MODKEY|ShiftMask,   /*Up*/ 111,     moveresizeedge, 	{.v = "T"} },
+	{ MODKEY|ShiftMask,		/*Right*/ 114,  moveresizeedge, 	{.v = "R"} },
+	{ MODKEY|ShiftMask, 	/*Left*/ 113,   moveresizeedge, 	{.v = "L"} },
 
     /*regular*/
 	TAGKEYS(                /*1*/ 10,       0)
